@@ -21,7 +21,7 @@ module.exports = function (app) {
 		controller.adminBoard
 	);
 
-	/* //Get vehicle maker list
+	//Get vehicle maker list
 	app.get('/api/user/makes', controller.userMakes);
 
 	//Get vehicle type list
@@ -34,13 +34,13 @@ module.exports = function (app) {
 	app.get('/api/user/service-type', controller.userServiceList);
 
 	//Get user list of vehicles
-	app.get('/api/user/vehicle-list/:id', controller.vehicleList);
+	app.get('/api/user/vehicle-list/:id', controller.userRegisteredVehicles);
 
 	//Get history
 	app.get('/api/user/history/:id', controller.userServiceHistory);
 
 	//Get bookings
-	app.get('/api/user/bookings/:Date', controller.adminListServices);
+	//app.get('/api/user/bookings/:Date', controller.adminListServices);
 
 	//Post a Vehicle
 	app.post('/api/user/vehicle', controller.userVehicle);
@@ -49,8 +49,8 @@ module.exports = function (app) {
 	app.post('/api/user/booking', controller.userBooking);
 
 	//Post an update of booking for mechanic and status
-	app.put(
-		'/api/user/update-booking/:id/:Mechanic/:Status',
-		controller.adminUpdateBooking
-	); */
+	// app.put(
+	// 	'/api/user/update-booking/:id/:Mechanic/:Status',
+	// 	controller.adminUpdateBooking
+	// );
 };
