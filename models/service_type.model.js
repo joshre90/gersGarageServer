@@ -4,7 +4,7 @@ const Service_Type = mongoose.model(
 	'Service_Type',
 	new mongoose.Schema({
 		Name: String,
-		Price: Number,
+		Price: String,
 	})
 );
 

@@ -8,7 +8,6 @@ db.mongoose = mongoose;
 db.user = require('./user.model');
 db.role = require('./role.model');
 db.booking = require('./booking.model');
-db.timeSlot = require('./timeslot.model');
 db.engine = require('./engine.model');
 db.invoice = require('./invoice.model');
 db.make = require('./make.model');

@@ -264,3 +264,103 @@ exports.userServiceHistory = async (req, res) => {
 		}
 	);
 };
+
+exports.adminListServices = async (req, res) => {
+	console.log(req.params);
+	await Booking.aggregate(
+		[
+			{
+				$match: {
+					Date: {
+						$gte: new Date(req.params.start),
+						$lte: new Date(req.params.end),
+					},
+				},
+			},
+			{
+				$lookup: {
+					from: 'vehicles',
+					localField: 'id_vehicle',
+					foreignField: '_id',
+					as: 'Vehicle',
+				},
+			},
+			{
+				$lookup: {
+					from: 'engines',
+					localField: 'Vehicle.id_engine',
+					foreignField: '_id',
+					as: 'Engine',
+				},
+			},
+			{
+				$lookup: {
+					from: 'makes',
+					localField: 'Vehicle.id_make',
+					foreignField: '_id',
+					as: 'Make',
+				},
+			},
+			{
+				$lookup: {
+					from: 'vehicle_types',
+					localField: 'Vehicle.id_vehicle_type',
+					foreignField: '_id',
+					as: 'Vehicle_type',
+				},
+			},
+			{
+				$lookup: {
+					from: 'service_types',
+					localField: 'id_service_type',
+					foreignField: '_id',
+					as: 'Service_type',
+				},
+			},
+			{
+				$lookup: {
+					from: 'mechanics',
+					localField: 'id_mechanic',
+					foreignField: '_id',
+					as: 'Mechanic',
+				},
+			},
+
+			{ $unwind: '$Vehicle' },
+			{ $unwind: '$Engine' },
+			{ $unwind: '$Make' },
+			{ $unwind: '$Vehicle_type' },
+			{ $unwind: '$Service_type' },
+			{ $unwind: { path: '$Mechanic', preserveNullAndEmptyArrays: true } },
+
+			{
+				$group: {
+					_id: {
+						id: '$_id',
+						Comments: '$Comments',
+						Date: '$Date',
+						Status: '$Status',
+						Licence: '$Vehicle.Licence',
+						Engine: '$Engine.name',
+						Make: '$Make.name',
+						Price: '$Service_type.price',
+						Vehicle_type: '$Vehicle_type.name',
+						Service_type: '$Service_type.name',
+						Mechanic: '$Mechanic.name',
+					},
+				},
+			},
+		],
+		function (error, results) {
+			if (error) return res.status(500).send(error);
+			if (results.length == 0) {
+				console.log('error');
+				return res
+					.status(404)
+					.send('There are not registered bookings for this day');
+			}
+			console.log(results);
+			return res.json(results);
+		}
+	);
+};

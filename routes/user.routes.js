@@ -40,7 +40,7 @@ module.exports = function (app) {
 	app.get('/api/user/history/:id', controller.userServiceHistory);
 
 	//Get bookings
-	//app.get('/api/user/bookings/:Date', controller.adminListServices);
+	app.get('/api/user/bookings/:start/:end', controller.adminListServices);
 
 	//Post a Vehicle
 	app.post('/api/user/vehicle', controller.userVehicle);
