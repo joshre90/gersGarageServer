@@ -117,20 +117,6 @@ exports.userServiceList = async (req, res) => {
 	});
 };
 
-//Getting Users vehicle list
-/* exports.vehicleList = async (req, res) => {
-	console.log(req.params);
-	await Vehicle.find({ id_user: req.params.id }, function (error, results) {
-		if (error) return res.status(500).send(error);
-		if (results.length == 0) {
-			console.log('error');
-			return res.status(500).send('This user has not registered cars');
-		}
-		console.log(results);
-		return res.json(results);
-	});
-}; */
-
 //Getting user registered vehicles
 exports.userRegisteredVehicles = async (req, res) => {
 	console.log(req.params);
